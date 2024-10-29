@@ -1,4 +1,5 @@
-﻿using AutoMapper;
+﻿using System;
+using AutoMapper;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -31,6 +32,7 @@ namespace PhotosApp
             services.Configure<PhotosServiceOptions>(configuration.GetSection("PhotosService"));
 
             var mvc = services.AddControllersWithViews();
+            services.AddRazorPages();
             if (env.IsDevelopment())
                 mvc.AddRazorRuntimeCompilation();
 
@@ -77,9 +79,14 @@ namespace PhotosApp
             app.UseSerilogRequestLogging();
 
             app.UseRouting();
+
+            app.UseAuthentication();
+            app.UseAuthorization();
+            
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute("default", "{controller=Photos}/{action=Index}/{id?}");
+                endpoints.MapRazorPages();
             });
         }
     }

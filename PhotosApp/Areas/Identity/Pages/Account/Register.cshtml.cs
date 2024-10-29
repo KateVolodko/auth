@@ -46,7 +46,7 @@ namespace PhotosApp.Areas.Identity.Pages.Account
 
         public class InputModel
         {
-            [Required]
+            [Required(ErrorMessage = "Необходимо ввести настоящую почту, чтобы мы могли оформить на вас кредит. Такие нынче правила в индустрии, ничего не поделаешь.")]
             [EmailAddress]
             [Display(Name = "Email")]
             public string Email { get; set; }
